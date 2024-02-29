@@ -1,0 +1,97 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<p class="book-row-name">Current Loans</p>
+    <div class="display-book-row">
+        {% if current_loans %}
+            {% for record in current_loans %}
+            <div class="book">
+                <a href="/search/show_book?id={{ record[0] }}">
+                    <img class="book-cover" src="{{ record[2] }}" alt="{{ record[3] }}">
+                    <p class="book-title" style="height: 80px;">{{ record[3] }}</p>
+                </a>
+                <p>Average Rating: {{ record[6]|default('N/A') }}</p>
+                <div class="book-details">
+                    <p>Loan Date: {{ record[4].strftime('%Y-%m-%d') }}</p>
+                    <p class="return-date" id="return-date-{{ record[1] }}">Return Date: {{ record[5].strftime('%Y-%m-%d') }}</p>
+                    <div class="button-container">
+                        <form method="post" action="{{ url_for('user.extend_loan', book_id=record[0], copy_id=record[1]) }}">
+                            <button type="submit" class="general-button">Extend Loan</button>
+                        </form>
+                        <form method="post" action="/return_book/{{ record[1] }}">
+                            <button type="submit" class="general-button">Return Book</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script>
+                var returnDate = new Date("{{ record[5] }}");
+                var currentDate = new Date();
+                if (returnDate < currentDate) {
+                    document.getElementById('return-date-{{ record[1] }}').style.color = 'red';
+                }
+            </script>
+            {% endfor %}
+        {% else %}
+            <p>No current loans</p>
+        {% endif %}
+    </div>
+
+<p class="book-row-name">Loan History</p>
+    <div class="display-book-row">
+        {% if user_history %}
+            {% for record in user_history %}
+            <div class="book">
+                <a href="/search/show_book?id={{ record[5] }}">
+                    <img class="book-cover" src="{{ record[1] }}" alt="{{ record[2] }}">
+                    <p class="book-title" style="height: 80px;">{{ record[2] }}</p>
+                </a>
+                <p>Average Rating: {{ record[6]|default('N/A') }}</p>
+                <div class="book-details">
+                    <p>Loan Date: {{ record[3].strftime('%Y-%m-%d') }}</p>
+                    <p>Return Date: {{ record[4].strftime('%Y-%m-%d') }}</p>
+                    <form method="post" action="{{ url_for('user.save_rating') }}">
+                        <input type="hidden" name="book_id" value="{{ record[5] }}">
+                        <label for="rating">Rate this book:</label>
+                        <select name="rating" id="rating">
+                            <option value="1">1 star</option>
+                            <option value="2">2 stars</option>
+                            <option value="3">3 stars</option>
+                            <option value="4">4 stars</option>
+                            <option value="5">5 stars</option>
+                        </select>
+                        <input type="submit" class="submit-rating-btn" value="Submit" style="font-size:12px">
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No history data to display</p>
+        {% endif %}
+    </div>
+
+    <p class="book-row-name">Requests</p>
+    <div class="display-book-row">
+        {% if current_requests %}
+            {% for record in current_requests %}
+            <div class="book">
+                <a href="/search/show_book?id={{ record[0] }}">
+                    <img class="book-cover" src="{{ record[3] }}" alt="{{ record[4] }}">
+                    <p class="book-title" style="height: 80px;">{{ record[4] }}</p>
+                </a>
+                <p>Average Rating: {{ record[5]|default('N/A') }}</p>
+                <p>Place in queue: {{ record[2] }}</p>
+                <div class="book-details">
+                    <div class="button-container">
+                        <form method="post" action="{{ url_for('user.cancel_request', book_id=record[0]) }}">
+                            <button type="submit" class="general-button">Cancel request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No current requests</p>
+        {% endif %}
+    </div>
+{% endblock %}

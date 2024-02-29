@@ -1,0 +1,18 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<p class="book-row-name">{{ ages }}</p>
+
+<div class="display-book-grid">
+    {% for result in books %}
+    <div class="book">
+        <a href="/search/show_book?id={{ result[2] }}">
+            <img class="book-cover" src="{{ result[1] }}">
+            <p class="book-title">{{ result[0] }}</p>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+    
+{% endblock %}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>{{umea_library}}</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/general.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/book.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/navbar.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/login.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/register.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/user_page.css')}}">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    </head>
+	<body>
+		<div class="navigation-bar">
+			<div class="left-section">
+				<p class="library-name">
+					Umeå Library
+				</p>
+                <a href="/" class="nav-buttons">
+                    Home
+				</a>
+
+				<div class="dropdown">
+					<div class="dropdown">
+						<button class="nav-dropdown-buttons">
+							Genres
+							<div class="down-arrow">
+								&#8227;
+							</div>
+						</button>
+						<div class="dropdown-content">
+							<a href="/fantasy" class="dropdown-button">
+								Fantasy
+							</a>
+							<a href="/romance" class="dropdown-button">
+								Romance
+							</a>
+							<a href="/sci-fi" class="dropdown-button">
+								Sci-Fi
+							</a>
+							<a href="/mystery" class="dropdown-button">
+								Mystery
+							</a>
+							<a href="/thriller" class="dropdown-button">
+								Thriller
+							</a>
+							<a href="/adventure" class="dropdown-button">
+								Adventure
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="dropdown">
+					<button class="nav-dropdown-buttons">
+						Age Categories
+						<div class="down-arrow">
+							&#8227;
+						</div>
+					</button>
+					<div class="dropdown-content">
+						<a href="/0-3" class="dropdown-button">
+							0-3
+						</a>
+						<a href="/3-6" class="dropdown-button">
+							3-6
+						</a>
+						<a href="/6-9" class="dropdown-button">
+							6-9
+						</a>
+						<a href="/9-12" class="dropdown-button">
+							9-12
+						</a>
+						<a href="/young_adult" class="dropdown-button">
+							Young Adult
+						</a>
+						<a href="/mature" class="dropdown-button">
+							Mature
+						</a>
+					</div>
+				</div>
+				
+			</div>
+			<div class="middle-section">
+				<form class="search" method="POST" action="/search/search">
+                    <input class="search-bar" type="text" id="keyword" name="keyword" placeholder="Search" required>
+
+					<button class="search-button" type="submit">
+						<div class="search-icon">
+							&#9906;
+						</div>
+					</button>
+				</form>
+			</div>
+			<div class="right-section">
+				<a href="/user_page" class="nav-buttons">
+					Profile
+				</a>
+				<div class="dropdown">
+					<button class="nav-dropdown-buttons">
+						Login/Register
+						<div class="down-arrow">
+							&#8227;
+						</div>
+					</button>
+					<div class="dropdown-content">
+						
+						<a href="/login" class="dropdown-button">
+							Login
+						</a>
+						<a href="/register" class="dropdown-button">
+							Register
+						</a>
+						<a href="/logout" class="dropdown-button">
+							Logout
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+            <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        	{% endif %}
+    	{% endwith %}
+
+        {% block content %}
+        {% endblock %}
+
+	</body>
+</html>

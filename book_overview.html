@@ -1,0 +1,55 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+    <p class="book-row-name">{{ book[1] }}</p>
+
+    <div class="display-book-info">
+        <img class="display-book-cover" src="{{ book[7] }}" alt="cover">
+
+        <div class="book-info">
+            <p>Language : {{ book[2] }}</p>
+            <p>Published : {{ book[5] }}</p>
+            <p>Age restriction : {{ book[3] }}</p>
+            <p>ISBN : {{ book[4] }}</p>
+            <p>Genre : {{ book[10] }}</p>
+            <p>Author : {{ book[11] }}</p>
+        </div>
+
+        <div class="availability">
+            <p class="text-header">Availability:</p>
+            {% if is_available %}
+                <p class="available-text">This book is available.</p>
+                <a href="/search/loan?bid={{ book[0] }}">
+                    <button class="return-loan-button">Loan</button>
+                </a>
+            {% else %}
+                <p class="available-text">This book is currently not available. You can request it.</p>
+                <a href="/search/loan?bid={{ book[0] }}">
+                    <button class="return-loan-button"  {% if is_requested %}disabled{% endif %}>
+                        {% if is_requested %}
+                            Already requested
+                        {% else %}
+                            Request
+                        {% endif %}                    
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="description">
+            <p class="text-header">Description:</p>
+            <p class="description-text">{{ book[6] }}</p>
+        </div>
+
+        <div class="recommended">
+            <p class="text-header">Want a recommended book?</p>
+            <a href="/search/recommend?bid={{ book[0] }}">
+                <button class="recommended-button">Recommend</button>
+            </a>
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

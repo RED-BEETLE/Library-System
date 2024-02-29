@@ -1,0 +1,17 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+    <p class="book-row-name">Search Results</p>
+
+    <div class="display-book-grid">
+        {% for result in books %}
+            <div class="book">
+                <a href="/search/show_book?id={{ result[0] }}">
+                    <img class="book-cover" src="{{ result[2] }}">
+                    <p class="book-title-rating">{{ result[1] }}</p>
+                    <p class="rating">{{ result[3] }}/5</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

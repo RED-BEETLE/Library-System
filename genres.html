@@ -1,0 +1,31 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<p class="book-row-name">{{ genre }}</p>
+
+<div class="display-book-row">
+    {% for result in books %}
+    <div class="book">
+        <a href="/search/show_book?id={{ result[2] }}">
+            <img class="book-cover" src="{{ result[1] }}">
+            <p class="book-title">{{ result[0] }}</p>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<p class="book-row-name">Top rated {{ genre }} books</p>
+
+<div class="display-book-row">
+    {% for result in top_books %}
+    <div class="book">
+        <a href="/search/show_book?id={{ result[2] }}">
+            <img class="book-cover" src="{{ result[1] }}">
+            <p class="book-title">{{ result[0] }}</p>
+            <p class="rating">{{ result[3] }}/5</p>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+    
+{% endblock %}

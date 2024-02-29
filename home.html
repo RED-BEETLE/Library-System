@@ -1,0 +1,45 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+    <p class="book-row-name">Top rated books</p>
+    <div class="display-book-row">
+        {% for result in best_reviewed_books %}
+            <div class="book">
+                <a href="/search/show_book?id={{ result[0] }}">
+                    <img class="book-cover" src="{{ result[2] }}" on="this.onerror=null; this.src='https://pixabay.com/illustrations/a-book-isolated-book-cover-empty-3057902/'">
+                    <p class="book-title-rating">{{ result[1] }}</p>
+                    <p class="rating">{{ result[3] }}/5</p>
+                </a>
+            </div>
+
+        {% endfor %}
+    </div>
+
+    <p class="book-row-name">Newly added books</p>
+
+    <div class="display-book-row">
+        {% for result in new_books %}
+        <div class="book">
+            <a href="/search/show_book?id={{ result[0] }}">
+                <img class="book-cover" src="{{ result[2] }}">
+                <p class="book-title">{{ result[1] }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+
+    <p class="book-row-name">Some of our other books</p>
+    <div class="display-book-row">
+        {% for result in random_books %}
+        <div class="book">
+            <a href="/search/show_book?id={{ result[0] }}">
+                <img class="book-cover" src="{{ result[2] }}">
+                <p class="book-title">{{ result[1] }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
